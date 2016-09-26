@@ -1,0 +1,356 @@
+来源网站http://blog.csdn.net/hitlion2008/article/details/9285785
+
+Python是一门动态语言
+与Java,C等相对,Python不用编译,像脚本一样直接运行.这就导致了,所有错误都是运行时的!即使有语法错误,或者异常,如果程序逻辑没有执行到,就不会有错误.比如一个if分支中有语法错误,使用了未定义的函数,但如果未执行到此分支,就可以正常运行.
+动态的另外一层意思就是它的类型是动态的,也就是说无需指定变量的类型,在运行时,根据它的内容来决定的类型.
+如何运行Python
+通常来讲有二种方式,一种方式是交互式的,就像Shell命令行提示符那样,交互式的,输入,就有输出；
+在终端输入python命令,就进入了Python的命令提示符中:>>>输入Python语句,解释器就会执行,并输出结果,如:
+[python] view plain copy print?
+[alex@alexon:~]$python  
+Python 2.7.3 (default, Apr 10 2013, 06:20:15)   
+[GCC 4.6.3] on linux2  
+Type "help", "copyright", "credits" or "license" for more information.  
+>>> print 'hello, world'  
+hello, world  
+>>>  
+输入exit()可以退出命令提示符.
+另外一种方式就是脚本,就像Shell的脚本的一样,把一组命令集合到一起执行,这就能发挥更大的作用.
+[python] view plain copy print?
+#!/usr/bin/python  
+print 'hello, world'  
+Python以缩进来区分语句块
+不像Java,C/C++以花括号{}来区分语句块.Python是以缩进来表示语句块,同一缩进级别为同一级别的语句块.
+一个脚本文件中的0级缩进是文件加载的时候就会被执行的语句,如上面的print.开启一个新的缩进需要使用:(冒号),代表下一级别的语句块,如条件,循环或者函数定义.
+缩进最好使用四个空格.而且要注意缩进要一致,使用空格就全都用空格,使用Tab就都使用Tab,混用就可能得到缩进错误:
+IndentationError: unindent does not match any outer indentation level
+操作符
+与Java和C中十分类似, +(加), -(减), *(乘), /(除), %(求余), **(指数运算), = (赋值).以及减便运算,如 +=, -=, *=和/= 等.
+赋值运算与其他语言一致.
+逻辑操作
+> < <= >= != ==与其他语言一样.
+不一样的有not逻辑非,and逻辑与和or逻辑或.
+注释与文档
+一行当中,从#开始地方就是注释.不会影响下一行.
+""引号放在文件的开头,函数的开头或者一个类的开头,就是文档注释,与Java中的/** ... */作用和目的是一样的.
+折行
+如果一行太长了,写不下了,就需要在下一行接着写,这时可以使用\来告诉Python,下一行继续.
+一行写多个语句
+Python是一个语句放在一行,行尾可以选择性的加上;但如果想在一行放多个语句,就需要用;来分隔语句:
+a = 1; b = 2; c = 3;
+虽然这在语法上可行,但不是一个好习惯,绝大多数的编程规范都是要一行写一个语句.
+基本数据类型
+int 
+long
+bool
+float
+与Java中非常接近.可以近似认为一致.bool的值是True和False,或者0(False),非0就是True.
+List和Tuple
+这就是Java或C中的数组.它是一个容器,能用来顺序的,以整数索引方式检索, 存储一组对象.List用[]来表示,如[1, 2, 3]就是一个List；而Tuple用()来表示,如(3, 4, 5)就是一个Tuple.它们的区别在于List是可变的；而Tuple是不可变的.也就是说不可以增,删和改.
+索引方式除了与Java一样的以一个整数下标方式外,还可以指定开始,结束和步长,和使用负索引来分割List:
+通用语法格式是:list[start:end:step]
+list[index] --- 返回第(index+1)个元素,受C语言影响,下标亦是从0开始
+list[start:end] --- 返回从start开始,到end-1,也就是list[start], list[start+1].....list[end-1]
+list[start:end:step] --- 与上面类似,只不过每隔step取一个
+list[:end]  ---- 缺省的开端是0
+list[start:] ---- 缺省的结尾是len(list),或者-1
+负数索引更是方便,它与正数的对应关系为:
+正数索引   0    1      2      3
+数组元素  [1]   [3]    [5]    [7]
+负数索引  -4    -3      -2    -1
+实例:
+[python] view plain copy print?
+>>> a = [1, 3, 5, 7];  
+>>> a[0]  
+1  
+>>> a[3]  
+7  
+>>> a[-1]  
+7  
+>>> a[-2]  
+5  
+>>> a[0:3]  
+[1, 3, 5]  
+>>> a[1:3:2]  
+[3]  
+>>> a[0:3:2]  
+[1, 5]  
+>>> a[0:-1:2]  
+[1, 5]  
+>>>  
+List是一个对象,它有一此内置的方法,如:
+包含关系: in, not in
+[python] view plain copy print?
+>>> 3 in a  
+True  
+>>> 8 in a  
+False  
+>>> 8 not in a  
+True  
+>>>  
+连接符: +
+[python] view plain copy print?
+>>> a + [9, 11]  
+[1, 3, 5, 7, 9, 11]  
+重复: *
+[python] view plain copy print?
+>>> a * 2  
+[1, 3, 5, 7, 1, 3, 5, 7]  
+>>>  
+
+字符串String
+字符串就是一个字符的数组,List的操作都可以对String直接使用.
+[python] view plain copy print?
+>>> str = 'hello, world'  
+>>> str[0:3]  
+'hel'  
+>>> str[0:3:2]  
+'hl'  
+>>> str[-1]  
+'d'  
+>>> str * 2  
+'hello, worldhello, world'  
+>>> '3' in str  
+False  
+>>> 'le' in str  
+False  
+>>> 'el' in str  
+True  
+>>> 'ell' not in str  
+False  
+>>>  
+字串格式化符%
+这是一个类似C语言printf和Java中的String.format()的操作符,它能格式化字串,整数,浮点等类型:语句是:
+formats % (var1, var2,....)
+它返回的是一个String.
+[python] view plain copy print?
+>>> "Int %d, Float %d, String '%s'" % (5, 2.3, 'hello')  
+"Int 5, Float 2, String 'hello'"  
+>>>  
+Dictionary字典
+相当于Java中的HashMap,用于以Key/Value方式存储的容器.创建方式为{key1: value1, key2: value2, ....}, 更改方式为dict[key] = new_value；索引方式为dict[key]. dict.keys()方法以List形式返回容器中所有的Key；dict.values()以List方式返回容器中的所有的Value:
+[python] view plain copy print?
+>>> box = {'fruits': ['apple','orange'], 'money': 1993, 'name': 'obama'}  
+>>> box['fruits']  
+['apple', 'orange']  
+>>> box['money']  
+1993  
+>>> box['money'] = 29393  
+>>> box['money']  
+29393  
+>>> box['nation'] = 'USA'  
+>>> box  
+{'money': 29393, 'nation': 'USA', 'name': 'obama', 'fruits': ['apple', 'orange']}  
+>>> box.keys()  
+['money', 'nation', 'name', 'fruits']  
+>>> box.values()  
+[29393, 'USA', 'obama', ['apple', 'orange']]  
+>>>  
+分支语句
+格式为:
+[python] view plain copy print?
+if expression:  
+      blocks;  
+elif expression2:  
+      blocks;  
+else:  
+      blocks;  
+其中逻辑表达式可以加上括号(),也可以不加.但如果表达式里面比较混乱,还是要加上括号,以提高清晰.但整体的逻辑表达式是可以不加的:
+[python] view plain copy print?
+>>> a = 3; b = 4; c = 5;  
+>>> if a == b and a != c:  
+... print "Are you sure"  
+... elif (a == c and b == c):  
+... print "All equal"  
+... else:  
+... print "I am not sure"  
+...   
+I am not sure  
+>>>  
+while循环
+与Java中类似:
+while expression:
+      blocks
+[python] view plain copy print?
+>>> i = 0;   
+>>> while i < 3:  
+... print "I am repeating";  
+... i += 1;  
+...   
+I am repeating  
+I am repeating  
+I am repeating  
+>>>  
+for语句
+与Java中的foreach语法一样, 遍历List:
+for var in list:
+     blocks;
+[python] view plain copy print?
+>>> msg = "Hello";  
+>>> for c in msg:  
+... print c;  
+...   
+H  
+e  
+l  
+l  
+o  
+>>>  
+数组推导
+这是Python最强大,也是最性感的功能:
+list = [expression for var in list condition]
+它相当于这样的逻辑:
+list = [];
+for var in list:
+    if condition:
+         execute expression;
+         add result of expression to list
+return list;
+一句话,相当于这么多逻辑,可见数组推导是一个十分强大的功能:
+[python] view plain copy print?
+>>> a = range(4);  
+>>> a  
+[0, 1, 2, 3]  
+>>> [x*x for x in a if x % 2 == 0]  
+[0, 4]  
+>>>  
+遍历列表a,对其是偶数的项,乘方.
+函数
+如何定义函数
+def function_name(args):
+      function_body;
+调用函数的方式function_name(formal_args):
+[python] view plain copy print?
+>>> def power(x):  
+... return x*x;  
+...   
+>>> power(4)  
+16  
+>>>  
+Python中函数也是一个对象,可以赋值,可以拷贝,可以像普通变量那样使用.其实可以理解为C语言中的指针:
+[python] view plain copy print?
+<pre name="code" class="python">>>> d = power;  
+>>> d(2)  
+4</pre>  
+<pre></pre>  
+另外就是匿名函数,或者叫做lambda函数,它没有名字,只有参数和表达式:
+lambda  args: expression
+[python] view plain copy print?
+>>> d = lambda x: x*x;  
+>>> d(2)  
+4  
+lambda最大的用处是用作实参:
+[python] view plain copy print?
+>>> def iter(func, list):  
+... ret = [];  
+... for var in list:  
+... ret.append(func(var));  
+... return ret;  
+...   
+>>> iter(lambda x: x*x, a)  
+[0, 1, 4, 9]  
+>>>  
+一些常用的内置函数
+所谓内置函数,就是不用任何导入,语言本身就支持的函数:
+print --- 打印输出
+print var1, var2, var3
+[python] view plain copy print?
+>>> a  
+[0, 1, 2, 3]  
+>>> d  
+<function <lambda> at 0x7f668c015140>  
+>>> print a, d  
+[0, 1, 2, 3] <function <lambda> at 0x7f668c015140>  
+>>>  
+print与%结合更为强大:
+print formats % (var1, var2, ...):
+[python] view plain copy print?
+>>> print "today is %d, welcome %s" % (2013, 'alex');  
+today is 2013, welcome alex  
+>>>  
+其实这没什么神秘的,前面提到过%格式化返回是一个字串,所以print仅是输出字串而已,格式化工作是由%来做的.
+
+len()---返回列表,字串的长度
+range([start], stop, [step]) --- 生成一个整数列表,从,start开始,到stop结束,以step为步长
+
+[python] view plain copy print?
+>>> range(4)  
+[0, 1, 2, 3]  
+>>> range(1,4)  
+[1, 2, 3]  
+>>> range(1,4,2)  
+[1, 3]  
+>>>  
+help(func)---获取某个函数的帮助文档.
+执行系统命令行命令
+import subprocess;
+check_call(commands, shell=True)可以执行一个命令,并检查结果:
+[python] view plain copy print?
+>>> check_call("ls -l .", shell=True);  
+total 380  
+-rw-r--r-- 1 alex alex 303137 Jun 28 23:25 00005.vcf  
+drwxrwxr-x 3 alex alex 4096 Jun 28 23:57 3730996syntheticseismogram  
+-rw-rw-r-- 1 alex alex 1127 Jun 28 23:45 contacts.txt  
+-rw-rw-r-- 1 alex alex 3349 Jun 29 00:19 contacts_vcard.vcf  
+drwxr-xr-x 2 alex alex 4096 Jun 15 18:43 Desktop  
+drwxr-xr-x 3 alex alex 4096 Jun 22 08:59 Documents  
+drwxr-xr-x 9 alex alex 4096 Jul 3 20:34 Downloads  
+-rw-r--r-- 1 alex alex 8445 Jun 15 18:17 examples.desktop  
+drwxrwxr-x 5 alex alex 4096 Jun 19 23:01 gitting  
+-rw-rw-r-- 1 alex alex 0 Jun 19 20:21 libpeerconnection.log  
+drwxr-xr-x 2 alex alex 4096 Jun 15 18:43 Music  
+-rw-rw-r-- 1 alex alex 148 Jul 4 22:46 persons.txt  
+drwxr-xr-x 3 alex alex 4096 Jul 4 23:08 Pictures  
+drwxr-xr-x 2 alex alex 4096 Jun 15 18:43 Public  
+-rw-rw-r-- 1 alex alex 65 Jul 8 22:15 py.py  
+-rw-rw-r-- 1 alex alex 271 Jul 4 21:28 speech.txt  
+-rw-rw-r-- 1 alex alex 93 Jul 3 23:02 speech.txt.bak  
+drwxr-xr-x 2 alex alex 4096 Jun 15 18:43 Templates  
+drwxrwxr-x 2 alex alex 4096 Jun 22 19:01 Ubuntu One  
+drwxr-xr-x 2 alex alex 4096 Jun 15 18:43 Videos  
+0  
+>>>  
+check_call是相当于在Shell上执行一个语句,所以可以发挥想像力,组合Shell命令:
+
+
+[python] view plain copy print?
+>>> check_call("ls -l . | grep 'py'", shell=True);  
+-rw-rw-r-- 1 alex alex 65 Jul 8 22:15 py.py  
+0  
+>>>  
+所以,这是相当强大的工具,可以像写Shell脚本那样,结合管道干一些大事!
+check_output(cmds, shell=True)执行命令,并以字串形式返回结果:
+[python] view plain copy print?
+>>> a = check_output("ls -l .", shell=True);  
+>>> a  
+'total 380\n-rw-r--r-- 1 alex alex 303137 Jun 28 23:25 00005.vcf\ndrwxrwxr-x 3 alex alex 4096 Jun 28 23:57 3730996syntheticseismogram\n-rw-rw-r-- 1 alex alex 1127 Jun 28 23:45 contacts.txt\n-rw-rw-r-- 1 alex alex 3349 Jun 29 00:19 contacts_vcard.vcf\ndrwxr-xr-x 2 alex alex 4096 Jun 15 18:43 Desktop\ndrwxr-xr-x 3 alex alex 4096 Jun 22 08:59 Documents\ndrwxr-xr-x 9 alex alex 4096 Jul 3 20:34 Downloads\n-rw-r--r-- 1 alex alex 8445 Jun 15 18:17 examples.desktop\ndrwxrwxr-x 5 alex alex 4096 Jun 19 23:01 gitting\n-rw-rw-r-- 1 alex alex 0 Jun 19 20:21 libpeerconnection.log\ndrwxr-xr-x 2 alex alex 4096 Jun 15 18:43 Music\n-rw-rw-r-- 1 alex alex 148 Jul 4 22:46 persons.txt\ndrwxr-xr-x 3 alex alex 4096 Jul 4 23:08 Pictures\ndrwxr-xr-x 2 alex alex 4096 Jun 15 18:43 Public\n-rw-rw-r-- 1 alex alex 65 Jul 8 22:15 py.py\n-rw-rw-r-- 1 alex alex 271 Jul 4 21:28 speech.txt\n-rw-rw-r-- 1 alex alex 93 Jul 3 23:02 speech.txt.bak\ndrwxr-xr-x 2 alex alex 4096 Jun 15 18:43 Templates\ndrwxrwxr-x 2 alex alex 4096 Jun 22 19:01 Ubuntu One\ndrwxr-xr-x 2 alex alex 4096 Jun 15 18:43 Videos\n'  
+>>> b = check_output("ls -l . | grep 'py'", shell=True);  
+>>> b  
+'-rw-rw-r-- 1 alex alex 65 Jul 8 22:15 py.py\n'  
+>>>  
+
+不用我说你就知道它的强大之处了!唯一需要注意的就是换行符也在里面,处理的时候需要注意!
+正则表达式
+Python也是支持正则表达式的,至于正则表达式,跟其他的语言如Java,C没什么差别,这里说说如何使用正则表达式来进行匹配:
+[python] view plain copy print?
+import re;  
+p = re.compile(expression);  
+m = p.search(target);  
+if m != None:  
+    # got match  
+else:  
+    # no match  
+如:
+[python] view plain copy print?
+>>> message = 'Welcome to the year of 2013';  
+>>> import re;  
+>>> p = re.compile('(\d+)');  
+>>> m = p.search(message);  
+>>> m  
+<_sre.SRE_Match object at 0x7f668c015300>  
+>>> print m.group(1)  
+2013  
+>>>  
+
+这些就是Python的入门基础知识, 了解了这些内容,我相信就可以使用Python来完成你的需要,比如写一些小工具之类的.对于大部分的日常工作,或者一些小工具来说,这些东西就足够了!
+但是如果想学会Python,或者想学好Python,这才是一个小小的开端,最好读一读<Python核心编程>这本书,相当的不错.
